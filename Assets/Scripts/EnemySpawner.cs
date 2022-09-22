@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _enemyPrefabsArray;
-    [SerializeField] private GameObject _enemiesContainer;
+    [SerializeField] private Transform[] _enemyPrefabsArray;
+    [SerializeField] private Transform _enemiesContainer;
 
     [SerializeField] private int _maxEnemiesOnScene = 5;
-    [SerializeField] private float _spawnDelay = 2f;
+    private int _enemiesOnScene = 0;
 
+    [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnXMin = -8f;
     [SerializeField] private float _spawnXMax = 8f;
     [SerializeField] private float _spawnYMin = 4f;
     [SerializeField] private float _spawnYMax = 8f;
     [SerializeField] private float _spawnZ = 0;
-
-    private int _enemiesOnScene = 0;
 
     System.Random random = new System.Random();
 
@@ -51,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemyInstantiate()
     {
-        Instantiate(_enemyPrefabsArray[RandomEnemyIndex()], RandomSpawnPosition(), Quaternion.identity, _enemiesContainer.transform);
+        Instantiate(_enemyPrefabsArray[RandomEnemyIndex()], RandomSpawnPosition(), Quaternion.identity, _enemiesContainer);
     }
 
     private int RandomEnemyIndex()

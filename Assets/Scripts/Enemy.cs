@@ -3,40 +3,46 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float _health = 100f;
+    private float _currentHealth;
+    [SerializeField] private float _maxHealth = 100f;
     [SerializeField] private int _timeToGrow = 5;
     [SerializeField] private float _moveSpeed = 1f;
     [SerializeField] private float _percentDamage = 25f;
     [SerializeField] private int _startPercentScale = 10;
 
-    private GameObject _player;
+    private Transform _player;
 
     private bool _isMaxScale = false;
 
     private Vector3 _maxScale;
     private Vector3 _startScale;
 
-    private void Start()
+    private void Awake()
     {
         _maxScale = transform.localScale;
         _startScale = new Vector3(_maxScale.x * _startPercentScale / 100, _maxScale.y * _startPercentScale / 100, _maxScale.z * _startPercentScale / 100);
         transform.localScale = _startScale;
 
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _currentHealth = _maxHealth;
 
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void Start()
+    {
         StartCoroutine(Grow());
     }
 
     private void OnDestroy()
     {
-        GlobalEventsManager.OnEnemyDestroy?.Invoke();
+        GlobalEventsManager.OnEnemyDestroy.Invoke();
     }
 
     private void FixedUpdate()
     {
         if (_isMaxScale && _player != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _player.position, _moveSpeed * Time.deltaTime);
         }
     }
 
@@ -68,12 +74,12 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (damage > 0 && _isMaxScale)
         {
-            _health -= damage;
+            _currentHealth -= _maxHealth * damage / 100;
         }
 
-        if (_health <= 0)
+        if (_currentHealth <= 0)
         {
-            GlobalEventsManager.OnEnemyKill?.Invoke();
+            GlobalEventsManager.OnEnemyKill.Invoke();
             Destroy(gameObject);
         }
     }

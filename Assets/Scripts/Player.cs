@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    public static float CurrentHealth { get; private set; }
+
     [SerializeField] private float _maxHealth = 100;
-    [SerializeField] private float _currentHealth;
-    [SerializeField] private float _moveSpeed = 0.15f;
+    [SerializeField] private float _moveSpeed = 0.05f;
     [SerializeField] private float _moveXMin = -8f;
     [SerializeField] private float _moveXMax = 8f;
 
-
-    private void Start()
+    private void Awake()
     {
-        _currentHealth = _maxHealth;
+        CurrentHealth = _maxHealth;
     }
 
     private void FixedUpdate()
@@ -41,12 +41,14 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (damage > 0)
         {
-            _currentHealth -= _maxHealth * damage / 100;
+            CurrentHealth -= _maxHealth * damage / 100;
+
+            GlobalEventsManager.OnPlayerHit.Invoke(CurrentHealth);
         }
 
-        if (_currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
-            GlobalEventsManager.OnPlayerKill?.Invoke();
+            GlobalEventsManager.OnPlayerKill.Invoke();
             Destroy(gameObject);
         }
     }
