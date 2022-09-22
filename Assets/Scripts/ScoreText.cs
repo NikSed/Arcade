@@ -8,7 +8,7 @@ public class ScoreText : MonoBehaviour
 
     private void Awake()
     {
-        GlobalEventsManager.OnEnemyDestroy.AddListener(AddScore);
+        GlobalEventsManager.OnEnemyKill.AddListener(AddScore);
     }
 
     private void Start()
