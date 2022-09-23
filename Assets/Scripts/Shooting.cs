@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    [SerializeField] private Transform _bulletPrefab;
+    [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Transform _bulletsContainer;
     [SerializeField] private float _rayMaxDistance = 50f;
 
@@ -10,21 +10,19 @@ public class Shooting : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out hit, _rayMaxDistance);
 
-            if (hit.transform != null)
-            {
-                Vector3 target = (hit.transform.position - transform.position).normalized;
-                BulletInstantiate(target);
-            }
+            if (Physics.Raycast(ray, out RaycastHit hit, _rayMaxDistance))
+                SpawnBullet(hit.transform);
         }
     }
 
-    private void BulletInstantiate(Vector3 target)
+    private void SpawnBullet(Transform target)
     {
-        Transform _bullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity, _bulletsContainer);
-        _bullet.GetComponent<Bullet>().Target = target;
+        Vector3 position = transform.position;
+        Vector3 directionToTarget = (target.position - position).normalized;
+
+        Bullet bullet = Instantiate(_bulletPrefab, position, Quaternion.identity, _bulletsContainer);
+        bullet.Setup(directionToTarget);
     }
 }

@@ -1,21 +1,28 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _percentDamage = 25;
-    [SerializeField] private float _lifeTime = 5f;
-    [SerializeField] private float _moveSpeed = 3f;
+    [SerializeField] private float _lifeTime = 3f;
+    [SerializeField] private float _moveSpeed = 6f;
 
-    public Vector3 Target { get; set; }
+    private Rigidbody _rigidbody;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
         Destroy(gameObject, _lifeTime);
     }
 
-    private void FixedUpdate()
+    public void Setup(Vector3 direction)
     {
-        Move();
+        _rigidbody.velocity = direction * _moveSpeed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,12 +30,8 @@ public class Bullet : MonoBehaviour
         if (!other.CompareTag("Player") && other.TryGetComponent(out IDamageable damageable))
         {
             damageable.GetDamage(_percentDamage);
+
             Destroy(gameObject);
         }
-    }
-
-    private void Move()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, Target, _moveSpeed * Time.deltaTime);
     }
 }

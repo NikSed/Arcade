@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         _currentHealth = _maxHealth;
 
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
+        _player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     private void Start()

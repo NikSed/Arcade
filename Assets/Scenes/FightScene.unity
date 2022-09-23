@@ -681,7 +681,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -698,7 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2aba574dccf704a99b3b0df78cb8b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 4422840865188944109, guid: 3e5f27345102b864d943e548b51686b6, type: 3}
+  _bulletPrefab: {fileID: 1434685682095702665, guid: 3e5f27345102b864d943e548b51686b6, type: 3}
   _bulletsContainer: {fileID: 1815294325}
   _rayMaxDistance: 50
 --- !u!1 &1815294324
