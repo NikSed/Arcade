@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 728317047}
   - component: {fileID: 728317046}
   m_Layer: 5
-  m_Name: ScoresText
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Scores:'
+  m_text: 'Last score:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1197,6 +1197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreTableContentPrefab: {fileID: 9190878139331710719, guid: 4570b07e52b71d744a4003e4ed5fb955, type: 3}
   _contentContainer: {fileID: 614674420}
+  _currentScoreText: {fileID: 728317046}
 --- !u!4 &1956101775
 Transform:
   m_ObjectHideFlags: 0

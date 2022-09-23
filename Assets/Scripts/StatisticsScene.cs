@@ -5,6 +5,12 @@ public class StatisticsScene : MonoBehaviour
 {
     [SerializeField] private Transform _scoreTableContentPrefab;
     [SerializeField] private Transform _contentContainer;
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+
+    private void Awake()
+    {
+        _currentScoreText = _currentScoreText.GetComponent<TextMeshProUGUI>();
+    }
 
     private void Start()
     {
@@ -13,6 +19,10 @@ public class StatisticsScene : MonoBehaviour
         if (data != null)
         {
             data.Scores.Reverse();
+
+            _currentScoreText.text = $"Last score: {data.Scores[0]}";
+
+            data.Scores.RemoveAt(0);
 
             foreach (var score in data.Scores)
             {
