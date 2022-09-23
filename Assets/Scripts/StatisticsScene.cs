@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using TMPro;
 
 public class StatisticsScene : MonoBehaviour
@@ -7,27 +6,30 @@ public class StatisticsScene : MonoBehaviour
     [SerializeField] private Transform _scoreTableContentPrefab;
     [SerializeField] private Transform _contentContainer;
 
-    private TextMeshProUGUI _scoreText;
-
-    private List<int> _scoresList = new List<int>();
-
-    private void Awake()
-    {
-        _scoreText = _scoreTableContentPrefab.GetChild(0).GetComponent<TextMeshProUGUI>();
-    }
-
     private void Start()
     {
-        var data = SaveManager.Load<SaveData>();
+        var data = SaveManager.Load<Data>();
 
-        _scoresList = data.Scores;
+        if (data != null)
+        {
+            data.Scores.Reverse();
 
-        Instantiate(_scoreTableContentPrefab, _contentContainer);
+            foreach (var score in data.Scores)
+            {
+                ItemInstatiate(score);
+            }
+        }
     }
 
-}
+    private void ItemInstatiate(int score)
+    {
+        Transform scoreItem = Instantiate(_scoreTableContentPrefab, _contentContainer);
+        TextMeshProUGUI scoreText = scoreItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        scoreText.text = score.ToString();
+    }
 
-public class ScoreItemView
-{
-
+    public void LoadMainScene()
+    {
+        SceneLoader.Load(SceneLoader.Scene.Main);
+    }
 }

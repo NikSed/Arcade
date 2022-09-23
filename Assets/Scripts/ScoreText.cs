@@ -29,27 +29,27 @@ public class ScoreText : MonoBehaviour
         SaveManager.Save(SetData());
     }
 
-    private SaveData SetData()
+    private Data SetData()
     {
-        var data = SaveManager.Load<SaveData>();
+        Data data = SaveManager.Load<Data>();
 
         List<int> list = new List<int>();
 
         if (data != null)
         {
-            foreach (var item in data.Scores)
+            foreach (var score in data.Scores)
             {
-                list.Add(data.Scores[item]);
+                list.Add(score);
             }
         }
 
         list.Add(_score);
 
-        SaveData saveData = new SaveData();
+        Data saveData = new Data();
 
         foreach (var item in list)
         {
-            saveData.Scores.Add(list[item]);
+            saveData.Scores.Add(item);
         }
 
         return saveData;

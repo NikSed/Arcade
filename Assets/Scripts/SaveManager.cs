@@ -12,13 +12,13 @@ public static class SaveManager
         File.WriteAllText(path, jsonDataString);
     }
 
-    public static T Load<T>() where T : new()
+    public static T Load<T>()
     {
         if (File.Exists(path))
         {
             return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
         }
 
-        return new T();
+        return default;
     }
 }

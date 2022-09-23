@@ -6,4 +6,9 @@ public class MainScene : MonoBehaviour
     {
         SceneLoader.Load(SceneLoader.Scene.Fight);
     }
+
+    public void LoadStatisticsScene()
+    {
+        SceneLoader.Load(SceneLoader.Scene.Statistics);
+    }
 }

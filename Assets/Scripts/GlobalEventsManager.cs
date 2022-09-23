@@ -1,7 +1,6 @@
-using UnityEngine;
 using UnityEngine.Events;
 
-public class GlobalEventsManager : MonoBehaviour
+public class GlobalEventsManager
 {
     public static UnityEvent OnEnemyKill = new UnityEvent();
     public static UnityEvent OnEnemyDestroy = new UnityEvent();
