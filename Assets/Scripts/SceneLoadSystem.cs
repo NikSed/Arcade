@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoadSystem : MonoBehaviour
 {
     public enum Scene
     {
@@ -10,15 +10,15 @@ public class SceneLoader : MonoBehaviour
         Statistics
     }
 
-    private static SceneLoader _instance;
+    private static SceneLoadSystem _instance;
 
-    public static SceneLoader Instance
+    public static SceneLoadSystem Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = new SceneLoader();
+                _instance = new SceneLoadSystem();
             }
 
             return _instance;

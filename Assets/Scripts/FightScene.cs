@@ -7,8 +7,13 @@ public class FightScene : MonoBehaviour
         GlobalEventsManager.OnPlayerKill.AddListener(LoadStatisticsScene);
     }
 
+    private void OnDestroy()
+    {
+        SaveSystem.Save();
+    }
+
     private void LoadStatisticsScene()
     {
-        SceneLoader.Load(SceneLoader.Scene.Statistics);
+        SceneLoadSystem.Load(SceneLoadSystem.Scene.Statistics);
     }
 }

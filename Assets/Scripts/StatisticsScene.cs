@@ -14,7 +14,7 @@ public class StatisticsScene : MonoBehaviour
 
     private void Start()
     {
-        var data = SaveManager.Load<Data>();
+        var data = SaveSystem.Load<SaveData>();
 
         if (data != null)
         {
@@ -40,6 +40,6 @@ public class StatisticsScene : MonoBehaviour
 
     public void LoadMainScene()
     {
-        SceneLoader.Load(SceneLoader.Scene.Main);
+        SceneLoadSystem.Load(SceneLoadSystem.Scene.Main);
     }
 }

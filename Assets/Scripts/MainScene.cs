@@ -4,11 +4,11 @@ public class MainScene : MonoBehaviour
 {
     public void LoadFightScene()
     {
-        SceneLoader.Load(SceneLoader.Scene.Fight);
+        SceneLoadSystem.Load(SceneLoadSystem.Scene.Fight);
     }
 
     public void LoadStatisticsScene()
     {
-        SceneLoader.Load(SceneLoader.Scene.Statistics);
+        SceneLoadSystem.Load(SceneLoadSystem.Scene.Statistics);
     }
 }
