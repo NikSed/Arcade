@@ -1,5 +1,5 @@
 # Arcade
 Тестовое задание
 
-Ссылка на exe:
-http://file.sampo.ru/73kkn7/
+Билд:
+http://file.sampo.ru/r6g655/
