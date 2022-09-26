@@ -1,19 +1,15 @@
 using UnityEngine;
 
-public class FightScene : MonoBehaviour
+public class LevelScene : MonoBehaviour
 {
     private void Awake()
     {
         GlobalEventsManager.OnPlayerKill.AddListener(LoadStatisticsScene);
     }
 
-    private void OnDestroy()
-    {
-        SaveSystem.Save();
-    }
-
     private void LoadStatisticsScene()
     {
+        SaveSystem.Save();
         SceneLoadSystem.Load(SceneLoadSystem.Scene.Statistics);
     }
 }

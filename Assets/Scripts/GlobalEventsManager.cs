@@ -7,4 +7,6 @@ public class GlobalEventsManager
 
     public static UnityEvent OnPlayerKill = new UnityEvent();
     public static UnityEvent<float> OnPlayerHit = new UnityEvent<float>();
+
+    public static UnityEvent OnLoadNextLevel = new UnityEvent();
 }

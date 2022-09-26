@@ -16,10 +16,11 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private float _currentHealth;
     [SerializeField] private bool _isMaxScale;
 
+    private float _doping = SceneLoadSystem.LevelNumber;
+
     private Transform _player;
     private MeshFilter _meshFilter;
     private MeshRenderer _meshRenderer;
-
 
     private Vector3 _maxScale;
     private Vector3 _startScale;
@@ -29,9 +30,9 @@ public class Enemy : MonoBehaviour, IDamageable
         _meshFilter.mesh = enemyScriptableObject.Mesh;
         _meshRenderer.material = enemyScriptableObject.Material;
         _baseHealth = enemyScriptableObject.BaseHealth;
-        _baseArmor = enemyScriptableObject.BaseArmor;
-        _baseMoveSpeed = enemyScriptableObject.BaseMoveSpeed;
-        _basePercentDamage = enemyScriptableObject.BasePercentDamage;
+        _baseArmor = enemyScriptableObject.BaseArmor * _doping;
+        _baseMoveSpeed = enemyScriptableObject.BaseMoveSpeed * _doping;
+        _basePercentDamage = enemyScriptableObject.BasePercentDamage * _doping;
         _baseStartPercentScale = enemyScriptableObject.BaseStartPercentScale;
         _baseGrowTime = enemyScriptableObject.BaseGrowTime;
     }

@@ -6,7 +6,7 @@ public class SceneLoadSystem : MonoBehaviour
     public enum Scene
     {
         Main,
-        Fight,
+        NextLevel,
         Statistics
     }
 
@@ -25,16 +25,23 @@ public class SceneLoadSystem : MonoBehaviour
         }
     }
 
+    public static int LevelNumber { get; private set; } = 0;
+
+    [SerializeField] private static int _maxLevel = 2;
+
     private const string MainSceneName = "MainScene";
-    private const string FightSceneName = "FightScene";
     private const string StatisticsSceneName = "StatisticsScene";
 
     private void Awake()
     {
+        PlayerPrefs.DeleteAll();
+
         if (_instance != null)
             Destroy(this);
 
         DontDestroyOnLoad(this);
+
+        GlobalEventsManager.OnLoadNextLevel.AddListener(LoadNextLevel);
     }
 
     public static void Load(Scene scene)
@@ -45,10 +52,11 @@ public class SceneLoadSystem : MonoBehaviour
         {
             case Scene.Main:
                 loadingSceneName = MainSceneName;
+                LevelNumber = default;
                 break;
-            case Scene.Fight:
-                loadingSceneName = FightSceneName;
-                break;
+            case Scene.NextLevel:
+                LoadNextLevel();
+                return;
             case Scene.Statistics:
                 loadingSceneName = StatisticsSceneName;
                 break;
@@ -58,5 +66,15 @@ public class SceneLoadSystem : MonoBehaviour
         }
 
         SceneManager.LoadScene(loadingSceneName);
+    }
+
+    public static void LoadNextLevel()
+    {
+        if (LevelNumber < _maxLevel)
+        {
+            LevelNumber++;
+
+            SceneManager.LoadScene(LevelNumber.ToString());
+        }
     }
 }

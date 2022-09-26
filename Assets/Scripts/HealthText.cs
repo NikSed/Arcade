@@ -7,18 +7,18 @@ public class HealthText : MonoBehaviour
 
     private void Awake()
     {
-        GlobalEventsManager.OnPlayerHit.AddListener(TextUpdate);
+        GlobalEventsManager.OnPlayerHit.AddListener(ShowHealth);
 
         _text = GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
     {
-        TextUpdate(Player.CurrentHealth);
+        ShowHealth(Player.CurrentHealth);
     }
 
-    private void TextUpdate(float health)
+    private void ShowHealth(float health)
     {
-        _text.text = $"HP: {(int)health}";
+        _text.text = $"HP: {(int)Player.CurrentHealth}";
     }
 }

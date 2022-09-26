@@ -9,9 +9,16 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float _moveXMin = -8f;
     [SerializeField] private float _moveXMax = 8f;
 
+    private const string CurrentHealthKey = "Health";
+
     private void Awake()
     {
-        CurrentHealth = _maxHealth;
+        GlobalEventsManager.OnLoadNextLevel.AddListener(SaveTempCurrentHealth);
+    }
+
+    private void Start()
+    {
+        LoadTempCurrentHealth();
     }
 
     private void FixedUpdate()
@@ -50,6 +57,24 @@ public class Player : MonoBehaviour, IDamageable
         {
             GlobalEventsManager.OnPlayerKill.Invoke();
             Destroy(gameObject);
+        }
+    }
+
+    private void SaveTempCurrentHealth()
+    {
+        PlayerPrefs.SetFloat(CurrentHealthKey, CurrentHealth);
+    }
+
+    private void LoadTempCurrentHealth()
+    {
+        if (PlayerPrefs.HasKey(CurrentHealthKey))
+        {
+            CurrentHealth = PlayerPrefs.GetFloat(CurrentHealthKey);
+            PlayerPrefs.DeleteKey(CurrentHealthKey);
+        }
+        else
+        {
+            CurrentHealth = _maxHealth;
         }
     }
 }

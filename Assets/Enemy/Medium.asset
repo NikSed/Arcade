@@ -15,7 +15,7 @@ MonoBehaviour:
   _mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: 04c1054616fd13442afc32c999f5bc2f, type: 2}
   _baseHealth: 100
-  _baseArmor: 20
+  _baseArmor: 10
   _baseMoveSpeed: 2
   _basePercentDamage: 25
   _baseStartPercentScale: 10

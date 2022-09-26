@@ -4,7 +4,7 @@ public class MainScene : MonoBehaviour
 {
     public void LoadFightScene()
     {
-        SceneLoadSystem.Load(SceneLoadSystem.Scene.Fight);
+        SceneLoadSystem.Load(SceneLoadSystem.Scene.NextLevel);
     }
 
     public void LoadStatisticsScene()
