@@ -1,35 +1,55 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshFilter))]
+
 public class Enemy : MonoBehaviour, IDamageable
 {
-    private float _currentHealth;
-    [SerializeField] private float _maxHealth = 100f;
-    [SerializeField] private int _timeToGrow = 5;
-    [SerializeField] private float _moveSpeed = 1f;
-    [SerializeField] private float _percentDamage = 25f;
-    [SerializeField] private int _startPercentScale = 10;
+    [SerializeField] private float _baseHealth;
+    [SerializeField] private float _baseArmor;
+    [SerializeField] private float _baseMoveSpeed;
+    [SerializeField] private float _basePercentDamage;
+    [SerializeField] private float _baseStartPercentScale;
+    [SerializeField] private float _baseGrowTime;
+
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private bool _isMaxScale;
 
     private Transform _player;
+    private MeshFilter _meshFilter;
+    private MeshRenderer _meshRenderer;
 
-    private bool _isMaxScale = false;
 
     private Vector3 _maxScale;
     private Vector3 _startScale;
 
+    public void Setup(EnemyScriptableObject enemyScriptableObject)
+    {
+        _meshFilter.mesh = enemyScriptableObject.Mesh;
+        _meshRenderer.material = enemyScriptableObject.Material;
+        _baseHealth = enemyScriptableObject.BaseHealth;
+        _baseArmor = enemyScriptableObject.BaseArmor;
+        _baseMoveSpeed = enemyScriptableObject.BaseMoveSpeed;
+        _basePercentDamage = enemyScriptableObject.BasePercentDamage;
+        _baseStartPercentScale = enemyScriptableObject.BaseStartPercentScale;
+        _baseGrowTime = enemyScriptableObject.BaseGrowTime;
+    }
+
     private void Awake()
     {
-        _maxScale = transform.localScale;
-        _startScale = new Vector3(_maxScale.x * _startPercentScale / 100, _maxScale.y * _startPercentScale / 100, _maxScale.z * _startPercentScale / 100);
-        transform.localScale = _startScale;
-
-        _currentHealth = _maxHealth;
-
+        _meshFilter = GetComponent<MeshFilter>();
+        _meshRenderer = GetComponent<MeshRenderer>();
         _player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     private void Start()
     {
+        _maxScale = transform.localScale;
+        _startScale = new Vector3(_maxScale.x * _baseStartPercentScale / 100, _maxScale.y * _baseStartPercentScale / 100, _maxScale.z * _baseStartPercentScale / 100);
+        transform.localScale = _startScale;
+        _currentHealth = _baseHealth;
+
         StartCoroutine(Grow());
     }
 
@@ -42,7 +62,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (_isMaxScale && _player != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _player.position, _moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _player.position, _baseMoveSpeed * Time.deltaTime);
         }
     }
 
@@ -50,7 +70,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (other.CompareTag("Player") && other.TryGetComponent(out IDamageable damageable))
         {
-            damageable.GetDamage(_percentDamage);
+            damageable.GetDamage(_basePercentDamage);
             Destroy(gameObject);
         }
     }
@@ -58,10 +78,11 @@ public class Enemy : MonoBehaviour, IDamageable
     private IEnumerator Grow()
     {
         float timer = 0f;
+        _isMaxScale = false;
 
-        while (timer < _timeToGrow)
+        while (timer < _baseGrowTime)
         {
-            transform.localScale = Vector3.Lerp(_startScale, _maxScale, timer / _timeToGrow);
+            transform.localScale = Vector3.Lerp(_startScale, _maxScale, timer / _baseGrowTime);
             timer += Time.deltaTime;
 
             yield return null;
@@ -74,13 +95,14 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (damage > 0 && _isMaxScale)
         {
-            _currentHealth -= _maxHealth * damage / 100;
-        }
+            damage -= damage * _baseArmor / 100;
+            _currentHealth -= damage;
 
-        if (_currentHealth <= 0)
-        {
-            GlobalEventsManager.OnEnemyKill.Invoke();
-            Destroy(gameObject);
+            if (_currentHealth <= 0)
+            {
+                GlobalEventsManager.OnEnemyKill.Invoke();
+                Destroy(gameObject);
+            }
         }
     }
 }

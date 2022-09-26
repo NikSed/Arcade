@@ -331,10 +331,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1bd0922c6d54b4284daea104b77473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefabsArray:
-  - {fileID: 2304093516768246129, guid: 5005073447d71204da3bbf1f338dadfe, type: 3}
-  - {fileID: 4981960447902926614, guid: 04c78b8dbc2936145b06e40ace0af36e, type: 3}
-  - {fileID: 8772860169999737815, guid: 9a28e463e6bc3b040b96d2624e56c8eb, type: 3}
+  _enemiesScriptableObjectArray:
+  - {fileID: 11400000, guid: 43612365c75e75d439a992bd4576c6bd, type: 2}
+  - {fileID: 11400000, guid: 4467be743090c6541839ec7e2eec192a, type: 2}
+  - {fileID: 11400000, guid: 65263dfa14cc66e4cb7a653b96ff6301, type: 2}
+  _enemyPrefab: {fileID: 3854486877156609848, guid: f7f444e402c60f34ab4726b5fd61b038, type: 3}
   _enemiesContainer: {fileID: 193249633}
   _maxEnemiesOnScene: 5
   _spawnDelay: 2

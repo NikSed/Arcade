@@ -11,17 +11,21 @@ public class ScoreText : MonoBehaviour
     {
         GlobalEventsManager.OnEnemyKill.AddListener(AddScore);
 
-        Score = 0;
+        _text = GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
     {
-        _text = GetComponent<TextMeshProUGUI>();
+        Score = 0;
     }
 
     private void AddScore()
     {
         Score++;
-        _text.text = $"Score: {Score}";
+
+        if (Score >= 0)
+        {
+            _text.text = $"Score: {Score}";
+        }
     }
 }

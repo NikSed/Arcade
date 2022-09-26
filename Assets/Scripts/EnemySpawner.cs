@@ -3,18 +3,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] _enemyPrefabsArray;
+    [SerializeField] private EnemyScriptableObject[] _enemiesScriptableObjectArray;
+
+    [SerializeField] private Transform _enemyPrefab;
     [SerializeField] private Transform _enemiesContainer;
 
     [SerializeField] private int _maxEnemiesOnScene = 5;
-    private int _enemiesOnScene = 0;
-
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnXMin = -8f;
     [SerializeField] private float _spawnXMax = 8f;
     [SerializeField] private float _spawnYMin = 4f;
     [SerializeField] private float _spawnYMax = 8f;
     [SerializeField] private float _spawnZ = 0;
+
+    private int _enemiesOnScene = 0;
 
     System.Random random = new System.Random();
 
@@ -49,12 +51,14 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemyInstantiate()
     {
-        Instantiate(_enemyPrefabsArray[RandomEnemyIndex()], RandomSpawnPosition(), Quaternion.identity, _enemiesContainer);
+        var enemy = Instantiate(_enemyPrefab, RandomSpawnPosition(), Quaternion.identity, _enemiesContainer);
+        enemy.GetComponent<Enemy>().Setup(GetRandomEnemyScriptableObject());
     }
 
-    private int RandomEnemyIndex()
+    private EnemyScriptableObject GetRandomEnemyScriptableObject()
     {
-        return random.Next(0, _enemyPrefabsArray.Length);
+        int randomIndex = random.Next(0, _enemiesScriptableObjectArray.Length);
+        return _enemiesScriptableObjectArray[randomIndex];
     }
 
     private Vector3 RandomSpawnPosition()
