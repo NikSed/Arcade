@@ -2,4 +2,4 @@
 Тестовое задание
 
 Билд:
-https://wdfiles.ru/430cdd
+https://wdfiles.ru/6daccd
